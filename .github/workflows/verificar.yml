@@ -1,13 +1,15 @@
 name: Check Commit Message Format
+# Nombre del flujo de trabajo: "Check Commit Message Format".
 
 on:
   pull_request:
     types:
       - opened
       - synchronize
+# El flujo de trabajo se activará cuando se abra un nuevo pull request o se realicen cambios en un pull request existente.
 
 jobs:
-  verificar:
+  check_commit_message:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,14 +18,26 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
+          # Realiza la clonación del repositorio en el entorno de ejecución del flujo de trabajo.
 
       - name: Check commit message format
         run: |
           commit_message=$(git log --format=%B -n 1 HEAD)
+          # Obtiene el último mensaje de commit del HEAD y lo almacena en la variable `commit_message`.
+          
           echo "Commit message: ${commit_message}"
-          commit_format="Update Nuevo documento de texto.txt"
+          # Imprime el mensaje de commit.
+          
+          commit_format="# Esto es un ejemplo"
+          # Define un formato válido de mensaje de commit en la variable `commit_format`.
+          
           if [[ ! ${commit_message} =~ ${commit_format} ]]; then
+            # Verifica si el mensaje de commit coincide con el formato establecido.
             echo "error: invalid commit message format"
             echo "Valid commit message format is: 'Issue #<issue_number>: <description>'"
+            
+            # Muestra un mensaje de error si el formato del mensaje de commit es incorrecto.
+            
             exit 1
+            # Finaliza la ejecución del flujo de trabajo con un código de salida 1.
           fi
