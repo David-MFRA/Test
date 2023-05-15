@@ -1,15 +1,29 @@
-name: Verificar Mensaje de Commit
+name: Check Commit Message Format
 
 on:
   pull_request:
     types:
       - opened
+      - synchronize
 
 jobs:
-  verificar:
+  check_commit_message:
     runs-on: ubuntu-latest
-    
-    steps: 
-      - name: Comprobar Formato de Inicio de Commit
-        run:         
-            echo "El mensaje de commit no cumple con el formato de inicio requerido."
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+
+      - name: Check commit message format
+        run: |
+          commit_message=$(git log --format=%B -n 1 HEAD)
+          echo "Commit message: ${commit_message}"
+          commit_format="Update Nuevo documento de texto.txt"
+          if [[ ! ${commit_message} =~ ${commit_format} ]]; then
+            echo "error: invalid commit message format"
+            echo "Valid commit message format is: 'Issue #<issue_number>: <description>'"
+            exit 1
+          fi
