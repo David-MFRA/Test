@@ -1,5 +1,4 @@
 name: Check Commit Message Format
-# Nombre del flujo de trabajo: "Check Commit Message Format".
 
 on:
   pull_request:
@@ -33,9 +32,8 @@ jobs:
           
           if [[ ! ${commit_message} =~ ${commit_format} ]]; then
             # Verifica si el mensaje de commit coincide con el formato establecido.
-            echo "error: invalid commit message format"
-            echo "Valid commit message format is: 'Issue #<issue_number>: <description>'"
             
+            echo "error: invalid commit message format"            
             # Muestra un mensaje de error si el formato del mensaje de commit es incorrecto.
             
             exit 1
