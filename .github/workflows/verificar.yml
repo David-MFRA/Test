@@ -34,6 +34,9 @@ jobs:
           # Elimina los caracteres diacríticos del mensaje de commit y el formato
           normalized_commit_message=$(echo ${commit_message} | iconv -f utf-8 -t ascii//TRANSLIT)
           normalized_commit_format=$(echo ${commit_format} | iconv -f utf-8 -t ascii//TRANSLIT)
+          
+          echo ${ normalized_commit_message}
+          echo ${ normalized_commit_format}
                               
           # Verifica si el mensaje de commit coincide con el formato establecido.
           if [[ ! ${normalized_commit_message} =~ ${normalized_commit_format} ]]; then            
