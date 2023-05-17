@@ -32,8 +32,8 @@ jobs:
           commit_format="#Esto es un ejemplo"        
           
           # Elimina los caracteres diacríticos del mensaje de commit y el formato
-          normalized_commit_message=$(echo ${commit_message} | iconv -f utf-8 -t ascii//TRANSLIT) | tr '[:upper:]' '[:lower:]')
-          normalized_commit_format=$(echo ${commit_format} | iconv -f utf-8 -t ascii//TRANSLIT) | tr '[:upper:]' '[:lower:]')
+          normalized_commit_message=$(echo ${commit_message} | iconv -f utf-8 -t ascii//TRANSLIT | tr '[:upper:]' '[:lower:]')
+          normalized_commit_format=$(echo ${commit_format} | iconv -f utf-8 -t ascii//TRANSLIT | tr '[:upper:]' '[:lower:]')
           
           echo ${normalized_commit_message}
           echo ${normalized_commit_format}
