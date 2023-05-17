@@ -21,21 +21,25 @@ jobs:
 
       - name: Check commit message format
         run: |
-          commit_message=$(git log --format=%B -n 1 HEAD)
           # Obtiene el último mensaje de commit del HEAD y lo almacena en la variable `commit_message`.
+          commit_message=$(git log --format=%B -n 1 HEAD)          
           
-          echo "Commit message: ${commit_message}"
-          # Imprime el mensaje de commit.
+          echo "Commit message: ${commit_message}"          
           
-          commit_format="#(?i)Esto es un ejemplo"
           # Define un formato válido de mensaje de commit en la variable `commit_format`.
+          # Utiliza el modificador (?i) para hacer la comparación case insensitive.
+          # Esto permitirá que pase el check incluso si hay diferencias de mayúsculas y minúsculas.
+          commit_format="#(?i)Esto es un ejemplo"        
           
-          if [[ ! ${commit_message} =~ ${commit_format} ]]; then
-            # Verifica si el mensaje de commit coincide con el formato establecido.
-            
-            echo "error: invalid commit message format"            
+          # Elimina los caracteres diacríticos del mensaje de commit y el formato
+          normalized_commit_message=$(echo ${commit_message} | iconv -f utf-8 -t ascii//TRANSLIT)
+          normalized_commit_format=$(echo ${commit_format} | iconv -f utf-8 -t ascii//TRANSLIT)
+                              
+          # Verifica si el mensaje de commit coincide con el formato establecido.
+          if [[ ! ${normalized_commit_message} =~ ${normalized_commit_format} ]]; then            
             # Muestra un mensaje de error si el formato del mensaje de commit es incorrecto.
+            echo "error: invalid commit message format"            
             
-            exit 1
             # Finaliza la ejecución del flujo de trabajo con un código de salida 1.
+            exit 1            
           fi
