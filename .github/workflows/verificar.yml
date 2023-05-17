@@ -1,23 +1,24 @@
 name: Check Commit Message Format
 
+# El flujo de trabajo se activará cuando se abra un nuevo pull request o se realicen cambios en un pull request existente.
 on:
   pull_request:
     types:
       - opened
       - synchronize
-# El flujo de trabajo se activará cuando se abra un nuevo pull request o se realicen cambios en un pull request existente.
 
 jobs:
   check_commit_message:
     runs-on: ubuntu-latest
-
+    
+    # Realiza la clonación del repositorio en el entorno de ejecución del flujo de trabajo.
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
-          # Realiza la clonación del repositorio en el entorno de ejecución del flujo de trabajo.
+        
 
       - name: Check commit message format
         run: |
