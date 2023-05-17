@@ -29,6 +29,15 @@ jobs:
           # Define un formato válido de mensaje de commit en la variable `commit_format`.
           commit_format="#Esto es un ejemplo"        
           
+          # Comprueba el encoding del mensaje del commit
+          # encoding=$(file -b --mime-encoding <<< "$commit_message")
+          # echo "Commit message encoding: ${encoding}"
+          
+          # Si el encoding no es UTF-8, lo convierte a UTF-8
+          #if [[ $encoding != "utf-8" ]]; then
+          #  commit_message=$(iconv -f $encoding -t utf-8 <<< "$commit_message")
+          #fi
+          
           # Elimina los caracteres diacríticos del mensaje de commit y el formato
           # Además, pasa de mayúsculas a minúsculas. Esto permitirá comparaciones más flexibles
           normalized_commit_message=$(echo ${commit_message} | iconv -f utf-8 -t ascii//TRANSLIT | tr '[:upper:]' '[:lower:]')
