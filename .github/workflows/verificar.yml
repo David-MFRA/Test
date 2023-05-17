@@ -18,7 +18,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
-        
+          fetch-depth: 1        
 
       - name: Check commit message format
         run: |
@@ -41,7 +41,7 @@ jobs:
           # Verifica si el mensaje de commit coincide con el formato establecido.
           if [[ ! ${normalized_commit_message} =~ ${normalized_commit_format} ]]; then            
             # Muestra un mensaje de error si el formato del mensaje de commit es incorrecto.
-            echo "error: invalid commit message format"            
+            echo "error: formato de mensaje de commit incorrecto. Formato esperado: ${commit_format}"          
             
             # Finaliza la ejecución del flujo de trabajo con un código de salida 1.
             exit 1            
