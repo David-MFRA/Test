@@ -27,7 +27,7 @@ jobs:
           echo "Commit message: ${commit_message}"
           # Imprime el mensaje de commit.
           
-          commit_format="# Esto es un ejemplo"
+          commit_format="#(?i)Esto es un ejemplo"
           # Define un formato válido de mensaje de commit en la variable `commit_format`.
           
           if [[ ! ${commit_message} =~ ${commit_format} ]]; then
