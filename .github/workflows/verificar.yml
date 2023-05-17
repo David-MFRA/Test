@@ -27,11 +27,10 @@ jobs:
           echo "Commit message: ${commit_message}"          
           
           # Define un formato válido de mensaje de commit en la variable `commit_format`.
-          # Utiliza el modificador (?i) para hacer la comparación case insensitive.
-          # Esto permitirá que pase el check incluso si hay diferencias de mayúsculas y minúsculas.
           commit_format="#Esto es un ejemplo"        
           
           # Elimina los caracteres diacríticos del mensaje de commit y el formato
+          # Además, pasa de mayúsculas a minúsculas. Esto permitirá comparaciones más flexibles
           normalized_commit_message=$(echo ${commit_message} | iconv -f utf-8 -t ascii//TRANSLIT | tr '[:upper:]' '[:lower:]')
           normalized_commit_format=$(echo ${commit_format} | iconv -f utf-8 -t ascii//TRANSLIT | tr '[:upper:]' '[:lower:]')
           
